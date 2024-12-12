@@ -2,6 +2,7 @@ import './MultiCheck.css';
 
 import React from 'react';
 import {FC} from 'react';
+import { MultiCheckOption } from './MultiCheckOption';
 
 export type Option = {
   label: string,
@@ -35,8 +36,15 @@ type Props = {
   onChange?: (options: Option[]) => void,
 }
 
-export const MultiCheck: FC<Props> = (props) => {
-  return <div className='MultiCheck'>
-    TODO
-  </div>
+export const MultiCheck: FC<Props> = ({ label, options }) => {
+  return (
+    <div className='MultiCheck'>
+      <label className='label'>{label}</label>
+      <div className='options'>
+        {options.map(({ label, value }) => (
+          <MultiCheckOption label={label} value={value} />
+        ))}
+      </div>
+    </div>
+  )
 }
