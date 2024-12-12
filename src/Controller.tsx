@@ -1,8 +1,9 @@
 import {FC} from 'react';
 import {useState} from 'react';
 import React from 'react';
-import {Option} from './MultiCheck';
 import lodash from 'lodash';
+
+import type { Option } from '@/MultiCheck';
 
 type Props = {
     render: (options: Option[], values?: string[], columns?: number, onChange?: (options: Option[]) => void) => React.ReactNode

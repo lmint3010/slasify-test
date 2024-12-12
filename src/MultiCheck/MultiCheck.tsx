@@ -1,13 +1,13 @@
-import './MultiCheck.css';
+import type { FC } from 'react';
 
 import React from 'react';
-import {FC} from 'react';
-import { MultiCheckOption } from './MultiCheckOption';
 
-export type Option = {
-  label: string,
-  value: string
-}
+import { Option } from '@/MultiCheck/types';
+import { MultiCheckContext } from '@/MultiCheck/sub-components/MultiCheckContext';
+import { DefaultColumn } from '@/MultiCheck/constants/initial';
+
+import './MultiCheck.css';
+import { MultiCheckColumns } from '@/MultiCheck/sub-components/MultiCheckColumns';
 
 /**
  * Notice:
@@ -36,15 +36,13 @@ type Props = {
   onChange?: (options: Option[]) => void,
 }
 
-export const MultiCheck: FC<Props> = ({ label, options }) => {
+export const MultiCheck: FC<Props> = ({ label, options, columns = DefaultColumn }) => {
   return (
-    <div className='MultiCheck'>
-      <label className='label'>{label}</label>
-      <div className='options'>
-        {options.map(({ label, value }) => (
-          <MultiCheckOption label={label} value={value} />
-        ))}
+    <MultiCheckContext options={options} columns={columns}>
+      <div className='MultiCheck'>
+        <label className='label'>{label}</label>
+        <MultiCheckColumns />
       </div>
-    </div>
+    </MultiCheckContext>
   )
 }
