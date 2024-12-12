@@ -2,12 +2,13 @@ import type { FC } from 'react';
 
 import React from 'react';
 
-import { Option } from '@/MultiCheck/types';
-import { MultiCheckContext } from '@/MultiCheck/sub-components/MultiCheckContext';
 import { DefaultColumn } from '@/MultiCheck/constants/initial';
+import { RootContextProvider } from '@/MultiCheck/sub-components/RootContext';
+import { Option } from '@/MultiCheck/types';
+
+import { OptionsList } from '@/MultiCheck/sub-components/OptionsList';
 
 import './MultiCheck.css';
-import { MultiCheckColumns } from '@/MultiCheck/sub-components/MultiCheckColumns';
 
 /**
  * Notice:
@@ -38,11 +39,11 @@ type Props = {
 
 export const MultiCheck: FC<Props> = ({ label, options, columns = DefaultColumn }) => {
   return (
-    <MultiCheckContext options={options} columns={columns}>
+    <RootContextProvider options={options} columns={columns}>
       <div className='MultiCheck'>
-        <label className='label'>{label}</label>
-        <MultiCheckColumns />
+        <h3 className='title'>{label}</h3>
+        <OptionsList />
       </div>
-    </MultiCheckContext>
+    </RootContextProvider>
   )
 }

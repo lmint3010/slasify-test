@@ -1,0 +1,10 @@
+.Option {
+  display: flex;
+  gap: 3px;
+  padding: 6px 12px;
+
+  & label {
+    cursor: pointer;
+    user-select: none;
+  }
+}

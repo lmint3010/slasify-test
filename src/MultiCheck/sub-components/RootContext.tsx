@@ -12,16 +12,23 @@ const Context = createContext<{
   dispatch: Dispatch<DispatchAction>,
 } | undefined>(undefined);
 
-type MultiCheckContextProps = PropsWithChildren<{
+type RootContextProviderProps = PropsWithChildren<{
   columns: number,
   options: Option[], 
 }>;
 
-export const MultiCheckContext: FC<MultiCheckContextProps> = ({ children, options, columns }) => {
+export const RootContextProvider: FC<RootContextProviderProps> = ({ children, options, columns }) => {
   const [state, dispatch] = useReducer(contextReducer, InitialContextState);
 
-  const groupedOptions = useMemo(() => groupOptionsByColumns([...options], columns), [options, columns]);
-  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+  const groupedOptions = useMemo(
+    () => groupOptionsByColumns([...options], columns),
+    [options, columns]
+  );
+
+  const contextValue = useMemo(
+    () => ({ state, dispatch }),
+    [state, dispatch]
+  );
 
   useEffect(() => {
     dispatch({ type: 'SET_GROUPED_OPTIONS', payload: groupedOptions });
