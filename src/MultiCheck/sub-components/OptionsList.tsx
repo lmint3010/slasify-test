@@ -1,10 +1,10 @@
 import type { ChangeEvent, FC } from 'react';
 
-import React from 'react';
 import { nanoid } from 'nanoid';
+import React from 'react';
 
+import { OptionCheckBox } from '@/MultiCheck/sub-components/OptionCheckBox';
 import { useMultiCheck } from '@/MultiCheck/sub-components/RootContext';
-import { Option } from '@/MultiCheck/sub-components/Option';
 
 import './OptionsList.css';
 
@@ -30,7 +30,7 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
       {groupedOptions.map((options) => (
         <div key={nanoid()} className="column">
           {options.map(({ label, value }) => (
-            <Option
+            <OptionCheckBox
               key={nanoid()}
               label={label}
               value={value}

@@ -5,14 +5,14 @@ import React from 'react';
 
 import './Option.css';
 
-export type OptionProps = {
+export type OptionCheckBoxProps = {
   label: string;
   value: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const Option: FC<OptionProps> = ({ label, value, ...inputProps }) => {
+export const OptionCheckBox: FC<OptionCheckBoxProps> = ({ label, value, ...inputProps }) => {
   const uid = nanoid();
 
   return (

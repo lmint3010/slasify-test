@@ -15,9 +15,10 @@ const Context = createContext<{
 type RootContextProviderProps = PropsWithChildren<{
   columns: number,
   options: Option[], 
+  onCheckedOptionsChange?: (options: Option[]) => void,
 }>;
 
-export const RootContextProvider: FC<RootContextProviderProps> = ({ children, options, columns }) => {
+export const RootContextProvider: FC<RootContextProviderProps> = ({ children, options, columns, onCheckedOptionsChange }) => {
   const [state, dispatch] = useReducer(contextReducer, InitialContextState);
 
   const groupedOptions = useMemo(
@@ -33,6 +34,14 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({ children, op
   useEffect(() => {
     dispatch({ type: 'SET_GROUPED_OPTIONS', payload: groupedOptions });
   }, [groupedOptions]);
+
+  useEffect(() => {
+    if (!onCheckedOptionsChange) return;
+
+    const checkedOptions = options.filter(option => state.checkedValues.includes(option.value));
+
+    onCheckedOptionsChange(checkedOptions);
+  }, [state.checkedValues]);
 
   return (
     <Context.Provider value={contextValue}>

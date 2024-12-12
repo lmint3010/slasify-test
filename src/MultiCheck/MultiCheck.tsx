@@ -37,9 +37,18 @@ type Props = {
   onChange?: (options: Option[]) => void,
 }
 
-export const MultiCheck: FC<Props> = ({ label, options, columns = DefaultColumn }) => {
+export const MultiCheck: FC<Props> = ({
+  label,
+  options,
+  onChange,
+  columns = DefaultColumn
+}) => {
   return (
-    <RootContextProvider options={options} columns={columns}>
+    <RootContextProvider
+      options={options}
+      columns={columns}
+      onCheckedOptionsChange={onChange}
+    >
       <div className='MultiCheck'>
         <h3 className='title'>{label}</h3>
         <OptionsList />
