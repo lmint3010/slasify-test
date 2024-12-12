@@ -1,7 +1,7 @@
 import type { Dispatch, FC, PropsWithChildren } from "react";
 import type { ContextState, DispatchAction, Option } from "@/MultiCheck/types";
 
-import React, { createContext, useEffect, useMemo, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 import { contextReducer } from "@/MultiCheck/utils/context-reducer";
 import { InitialContextState } from "@/MultiCheck/constants/initial";
@@ -42,7 +42,7 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({ children, op
 };
 
 export function useMultiCheck() {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (!context) {
     throw new Error('useMultiCheckContext must be used within a MultiCheckContext');

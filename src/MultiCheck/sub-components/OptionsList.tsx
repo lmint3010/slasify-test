@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
 
 import React from 'react';
 import { nanoid } from 'nanoid';
@@ -11,17 +11,31 @@ import './OptionsList.css';
 export type MultiCheckOptionsListProps = {};
 
 export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
-  const { state } = useMultiCheck();
+  const { 
+    state: { groupedOptions, checkedValues },
+    dispatch,
+  } = useMultiCheck();
+
+  const handleOptionChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = target;
+    
+    dispatch({
+      type: 'UPDATE_OPTION',
+      payload: { value, checked }
+    });
+  };
 
   return (
     <div className="OptionsList">
-      {state.groupedOptions.map((options) => (
+      {groupedOptions.map((options) => (
         <div key={nanoid()} className="column">
           {options.map(({ label, value }) => (
             <Option
               key={nanoid()}
               label={label}
               value={value}
+              checked={checkedValues.includes(value)}
+              onChange={handleOptionChange}
             />
           ))}
         </div>

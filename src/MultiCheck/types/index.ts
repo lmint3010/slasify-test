@@ -5,9 +5,13 @@ export type Option = {
 
 export type ContextState = {
   groupedOptions: Option[][],
+  checkedValues: string[],
 };
 
 export type DispatchAction = {
   type: 'SET_GROUPED_OPTIONS',
   payload: Option[][],
+} | {
+  type: 'UPDATE_OPTION',
+  payload: { value: string, checked: boolean },
 };

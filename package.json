@@ -4,6 +4,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "immer": "^10.1.1",
     "jest": "27.5.1",
     "lodash": "4.17.21",
     "nanoid": "^5.0.9",
