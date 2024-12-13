@@ -41,12 +41,6 @@ export function contextReducer(state: ContextState, action: DispatchAction): Con
       });
     }
 
-    case 'SET_CHECKED_VALUES': {
-      return produce(state, draft => {
-        draft.checkedValues = action.payload;
-      });
-    }
-
     default:
       return state;
   }
