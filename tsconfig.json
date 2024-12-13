@@ -2,11 +2,23 @@
   "compilerOptions": {
     "strict": true,
     "target": "es6",
+    "lib": ["ES2020", "dom"],
     "module": "commonjs",
     "jsx": "react",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": ["@testing-library/jest-dom"],
   },
+  "include": [
+    "src/**/*",
+    "jest.setup.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

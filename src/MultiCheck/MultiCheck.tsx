@@ -1,12 +1,14 @@
-import './MultiCheck.css';
+import type { FC } from 'react';
 
 import React from 'react';
-import {FC} from 'react';
 
-export type Option = {
-  label: string,
-  value: string
-}
+import { DefaultColumn } from '@/MultiCheck/constants/initial';
+import { RootContextProvider } from '@/MultiCheck/sub-components/RootContextProvider';
+import { Option } from '@/MultiCheck/types';
+
+import { OptionsList } from '@/MultiCheck/sub-components/OptionsList';
+
+import './MultiCheck.css';
 
 /**
  * Notice:
@@ -35,8 +37,26 @@ type Props = {
   onChange?: (options: Option[]) => void,
 }
 
-export const MultiCheck: FC<Props> = (props) => {
-  return <div className='MultiCheck'>
-    TODO
-  </div>
+export const MultiCheck: FC<Props> = ({
+  label,
+  options,
+  values,
+  columns = DefaultColumn,
+  onChange
+}) => {
+  return (
+    <RootContextProvider
+      defaultValues={values}
+      options={options}
+      columns={columns}
+      onCheckedOptionsChange={onChange}
+    >
+      <div className='MultiCheck'>
+        <h3 className='title'>{label}</h3>
+        <div className='content'>
+          <OptionsList />
+        </div>
+      </div>
+    </RootContextProvider>
+  )
 }
