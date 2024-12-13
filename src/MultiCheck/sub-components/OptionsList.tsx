@@ -38,7 +38,7 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
   return (
     <div className="OptionsList">
       {groupedOptions.map((options) => (
-        <div key={nanoid()} className="column">
+        <div key={nanoid()} className="column" data-testid="options-column">
           {options.map(({ label, value }) => (
             <OptionCheckBox
               key={nanoid()}
