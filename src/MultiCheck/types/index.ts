@@ -1,3 +1,4 @@
+// Temporary put all types here - we can move them to separate files later
 export type Option = {
   label: string,
   value: string
