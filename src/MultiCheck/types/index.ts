@@ -7,6 +7,7 @@ export type ContextState = {
   originalOptions: Option[],
   groupedOptions: Option[][],
   checkedValues: string[],
+  onChangeCallback?: (options: Option[]) => void,
 };
 
 export type DispatchAction = {

@@ -6,16 +6,17 @@ import { SelectAllOption } from '@/MultiCheck/constants/initial';
 export function contextReducer(state: ContextState, action: DispatchAction): ContextState {
   switch(action.type) {
     case 'INITIAL': {
-      const { groupedOptions, checkedValues, originalOptions } = action.payload;
-
-      const isCheckedAll = checkedValues.length === originalOptions.length;
+      const { groupedOptions, checkedValues, originalOptions, onChangeCallback } = action.payload;
 
       return produce(state, draft => {
-        draft.groupedOptions = groupedOptions;
-        draft.originalOptions = originalOptions;
-        draft.checkedValues = isCheckedAll
-          ? [...checkedValues, SelectAllOption.value]
-          : checkedValues;
+        Object.assign(draft, {
+          onChangeCallback,
+          groupedOptions,
+          originalOptions,
+          checkedValues: checkedValues.length === originalOptions.length 
+            ? [...checkedValues, SelectAllOption.value]
+            : checkedValues
+        });
       });
     }
 

@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC } from 'react';
 
 import { nanoid } from 'nanoid';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { SelectAllOption } from '@/MultiCheck/constants/initial';
 import { OptionCheckBox } from '@/MultiCheck/sub-components/OptionCheckBox';
@@ -13,9 +13,11 @@ export type MultiCheckOptionsListProps = {};
 
 export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
   const { 
-    state: { groupedOptions, checkedValues },
+    state: { groupedOptions, checkedValues, originalOptions, onChangeCallback },
     dispatch,
   } = useMultiCheck();
+
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const handleToggleOption = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = target;
@@ -24,6 +26,8 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
       type: 'TOGGLE_OPTION',
       payload: { value, checked }
     });
+
+    setHasInteracted(true);
   };
 
   const handleToggleSelectAll = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +37,19 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
       type: 'TOGGLE_SELECT_ALL',
       payload: { checked }
     });
+
+    setHasInteracted(true);
   };
+
+  useEffect(() => {
+    if (hasInteracted && onChangeCallback) {
+      const checkedOptions = originalOptions.filter(
+        option => checkedValues.includes(option.value)
+      );
+
+      onChangeCallback(checkedOptions);
+    }
+  }, [checkedValues, hasInteracted]);
 
   return (
     <div className="OptionsList">

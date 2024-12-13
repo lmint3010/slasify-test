@@ -293,6 +293,9 @@ describe('MultiCheck', () => {
 
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledTimes(targetOptions.length);
+
+      expect(onChange.mock.calls[0][0]).toEqual([targetOptions[0]]);
+      expect(onChange.mock.calls[1][0]).toEqual(targetOptions);
     });
   });
 });

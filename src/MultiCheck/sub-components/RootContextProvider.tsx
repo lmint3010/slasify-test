@@ -30,8 +30,6 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({
 
   const [state, dispatch] = useReducer(contextReducer, InitialContextState);
 
-  const { checkedValues } = state;
-
   const groupedOptions = useMemo(
     () => groupOptionsByColumns(optionsWithSelectAll, columns),
     [options, columns]
@@ -42,6 +40,11 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({
     [state, dispatch]
   );
 
+  const memorizedOnChangeCallback = useMemo(
+    () => onCheckedOptionsChange,
+    [onCheckedOptionsChange]
+  );
+
   useEffect(() => {
     dispatch({
       type: 'INITIAL',
@@ -49,19 +52,10 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({
         groupedOptions,
         originalOptions: options,
         checkedValues: defaultValues || [],
+        onChangeCallback: memorizedOnChangeCallback,
       }
     });
   }, [groupedOptions, defaultValues]);
-
-  useEffect(() => {
-    if (!onCheckedOptionsChange) return;
-
-    const checkedOptions = optionsWithSelectAll.filter(
-      ({ value }) => checkedValues.includes(value)
-    );
-
-    onCheckedOptionsChange(checkedOptions);
-  }, [checkedValues]);
 
   return (
     <Context.Provider value={contextValue}>
