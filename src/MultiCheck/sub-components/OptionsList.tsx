@@ -20,7 +20,7 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
     const { value, checked } = target;
     
     dispatch({
-      type: 'UPDATE_OPTION',
+      type: 'TOGGLE_OPTION',
       payload: { value, checked }
     });
   };

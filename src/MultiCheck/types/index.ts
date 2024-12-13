@@ -12,7 +12,7 @@ export type DispatchAction = {
   type: 'SET_GROUPED_OPTIONS',
   payload: Option[][],
 } | {
-  type: 'UPDATE_OPTION',
+  type: 'TOGGLE_OPTION',
   payload: { value: string, checked: boolean },
 } | {
   type: 'SET_CHECKED_VALUES',

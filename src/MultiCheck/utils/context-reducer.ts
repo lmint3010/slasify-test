@@ -9,7 +9,8 @@ export function contextReducer(state: ContextState, action: DispatchAction): Con
         draft.groupedOptions = action.payload
       });
     }
-    case 'UPDATE_OPTION': {
+
+    case 'TOGGLE_OPTION': {
       const { value, checked } = action.payload;
 
       return produce(state, draft => {
@@ -20,11 +21,13 @@ export function contextReducer(state: ContextState, action: DispatchAction): Con
           : currentCheckedValues.filter(v => v !== value);
       });
     }
+
     case 'SET_CHECKED_VALUES': {
       return produce(state, draft => {
         draft.checkedValues = action.payload;
       });
     }
+
     default:
       return state;
   }
