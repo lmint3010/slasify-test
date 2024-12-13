@@ -6,15 +6,13 @@ export function groupOptionsByColumns(options: Option[], columns: number): Optio
 
   const expectedColumns = Math.min(idealColumns, Math.max(1, columns));
 
+  // Calculate the number of options per column
   const idealOptionsPerColumn = Math.floor(options.length / expectedColumns);
   const extraOptions = options.length % expectedColumns;
 
-  if (expectedColumns > options.length) {
-    return options.map(option => [option]);
-  }
-
   const groupedResult = Array.from({ length: expectedColumns }) as Option[][];
 
+  // Distribute options to each column
   groupedResult.forEach((_, index) => {
     const optionsToTake = idealOptionsPerColumn + (index < extraOptions ? 1 : 0);
 
