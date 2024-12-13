@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { FC } from 'react';
 import { MultiCheck } from './MultiCheck';
 import { Controller } from './Controller';

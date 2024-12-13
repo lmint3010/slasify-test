@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import { nanoid } from 'nanoid';
-import React from 'react';
+import React, { useId } from 'react';
 
 import './OptionCheckBox.css';
 
@@ -13,7 +13,7 @@ export type OptionCheckBoxProps = {
 };
 
 export const OptionCheckBox: FC<OptionCheckBoxProps> = ({ label, value, ...inputProps }) => {
-  const uid = nanoid();
+  const uid = useId();
 
   return (
     <div className="OptionCheckBox">
