@@ -133,5 +133,64 @@ describe('MultiCheck', () => {
       expect(selectAllInputElement.checked).toBe(true);
     });
   });
+  describe('Options interactions', () => {
+    test('should select options when clicking on the label', () => {
+      renderMultiCheck({ ...defaultProps });
+
+      const targetOptions = TEST_OPTIONS;
+
+      targetOptions.forEach(option => {
+        const labelElement = screen.getByText(option.label);
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(labelElement);
+
+        expect(inputElement.checked).toBe(true);
+      });
+    });
+
+    test('should select options when clicking on the checkbox', () => {
+      renderMultiCheck({ ...defaultProps });
+
+      const targetOptions = TEST_OPTIONS; 
+
+      targetOptions.forEach(option => {
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(inputElement);
+
+        expect(inputElement.checked).toBe(true);
+      });
+    });
+
+    test('should unselect options when clicking on the label', () => {
+      const targetOptions = TEST_OPTIONS.slice(0, 2);
+
+      renderMultiCheck({ ...defaultProps, values: targetOptions.map(option => option.value) });
+
+      targetOptions.forEach(option => {
+        const labelElement = screen.getByText(option.label);
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(labelElement);
+
+        expect(inputElement.checked).toBe(false);
+      });
+    });
+
+    test('should unselect options when clicking on the checkbox', () => {
+      const targetOptions = TEST_OPTIONS.slice(0, 2);
+
+      renderMultiCheck({ ...defaultProps, values: targetOptions.map(option => option.value) });
+
+      targetOptions.forEach(option => {
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(inputElement);
+
+        expect(inputElement.checked).toBe(false);
+      });
+    });
+  });
   });
 });
