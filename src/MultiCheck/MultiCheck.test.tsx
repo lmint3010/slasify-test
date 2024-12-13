@@ -110,5 +110,28 @@ describe('MultiCheck', () => {
     });
   });
 
+  describe('Select All rendering', () => {
+    test('should render "Select All" option in the options list', () => {
+      renderMultiCheck({ ...defaultProps });
+
+      expect(screen.getByText(SelectAllOption.label)).toBeInTheDocument();
+    });
+
+    test('should have "Select All" unchecked by default when some options are not selected initially', () => {
+      renderMultiCheck({ ...defaultProps, values: TEST_OPTIONS.slice(0, 2).map(option => option.value) });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      expect(selectAllInputElement.checked).toBe(false);
+    });
+
+    test('should have "Select All" checked by default when all options are selected initially', () => {
+      renderMultiCheck({ ...defaultProps, values: TEST_OPTIONS.map(option => option.value) });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      expect(selectAllInputElement.checked).toBe(true);
+    });
+  });
   });
 });
