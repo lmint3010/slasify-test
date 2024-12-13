@@ -133,6 +133,7 @@ describe('MultiCheck', () => {
       expect(selectAllInputElement.checked).toBe(true);
     });
   });
+
   describe('Options interactions', () => {
     test('should select options when clicking on the label', () => {
       renderMultiCheck({ ...defaultProps });
@@ -191,6 +192,77 @@ describe('MultiCheck', () => {
         expect(inputElement.checked).toBe(false);
       });
     });
+  });
+
+  describe('Select All interactions', () => {
+    test('should automatically check "Select All" checkbox when all options become selected', () => {
+      renderMultiCheck({ ...defaultProps });
+
+      const targetOptions = TEST_OPTIONS;
+
+      targetOptions.forEach(option => {
+        const inputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(inputElement);
+      });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      expect(selectAllInputElement.checked).toBe(true);
+    });
+
+    test('should automatically uncheck "Select All" checkbox when any option becomes unselected', () => {
+      const targetOptions = TEST_OPTIONS.slice(0, 2);
+
+      renderMultiCheck({
+        ...defaultProps,
+        values: targetOptions.map(option => option.value)
+      });
+
+      targetOptions.forEach(option => {
+        const inputElement = screen.getByDisplayValue(option.value);
+
+        fireEvent.click(inputElement);
+      });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      expect(selectAllInputElement.checked).toBe(false);
+    });
+
+    test('should check all option checkboxes when clicking "Select All" checkbox', () => {
+      const allOptions = TEST_OPTIONS;
+
+      renderMultiCheck({ ...defaultProps });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      fireEvent.click(selectAllInputElement);
+
+      allOptions.forEach(option => {
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        expect(inputElement.checked).toBe(true);
+      });
+    });
+
+    test('should uncheck all option checkboxes when clicking "Select All" checkbox', () => {
+      const allOptions = TEST_OPTIONS;
+
+      renderMultiCheck({ ...defaultProps, values: allOptions.map(option => option.value) });
+
+      const selectAllInputElement: HTMLInputElement = screen.getByDisplayValue(SelectAllOption.value);
+
+      fireEvent.click(selectAllInputElement);
+
+      allOptions.forEach(option => {
+        const inputElement: HTMLInputElement = screen.getByDisplayValue(option.value);
+
+        expect(inputElement.checked).toBe(false);
+      });
+    });
+  });
+
   });
   });
 });
