@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import React from 'react';
 
 import { DefaultColumn } from '@/MultiCheck/constants/initial';
-import { RootContextProvider } from '@/MultiCheck/sub-components/RootContext';
+import { RootContextProvider } from '@/MultiCheck/sub-components/RootContextProvider';
 import { Option } from '@/MultiCheck/types';
 
 import { OptionsList } from '@/MultiCheck/sub-components/OptionsList';
@@ -40,11 +40,13 @@ type Props = {
 export const MultiCheck: FC<Props> = ({
   label,
   options,
-  onChange,
-  columns = DefaultColumn
+  values,
+  columns = DefaultColumn,
+  onChange
 }) => {
   return (
     <RootContextProvider
+      defaultValues={values}
       options={options}
       columns={columns}
       onCheckedOptionsChange={onChange}

@@ -16,10 +16,19 @@ type RootContextProviderProps = PropsWithChildren<{
   columns: number,
   options: Option[], 
   onCheckedOptionsChange?: (options: Option[]) => void,
+  defaultValues?: string[],
 }>;
 
-export const RootContextProvider: FC<RootContextProviderProps> = ({ children, options, columns, onCheckedOptionsChange }) => {
+export const RootContextProvider: FC<RootContextProviderProps> = ({
+  children,
+  options,
+  columns,
+  defaultValues,
+  onCheckedOptionsChange
+}) => {
   const [state, dispatch] = useReducer(contextReducer, InitialContextState);
+
+  const { checkedValues } = state;
 
   const groupedOptions = useMemo(
     () => groupOptionsByColumns([...options], columns),
@@ -32,16 +41,30 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({ children, op
   );
 
   useEffect(() => {
-    dispatch({ type: 'SET_GROUPED_OPTIONS', payload: groupedOptions });
+    dispatch({
+      type: 'SET_GROUPED_OPTIONS',
+      payload: groupedOptions
+    });
   }, [groupedOptions]);
 
   useEffect(() => {
     if (!onCheckedOptionsChange) return;
 
-    const checkedOptions = options.filter(option => state.checkedValues.includes(option.value));
+    const { checkedValues } = state;
+
+    const checkedOptions = options.filter(
+      ({ value }) => checkedValues.includes(value)
+    );
 
     onCheckedOptionsChange(checkedOptions);
-  }, [state.checkedValues]);
+  }, [checkedValues]);
+
+  useEffect(() => {
+    dispatch({
+      type: 'SET_CHECKED_VALUES',
+      payload: defaultValues || []
+    });
+  }, [defaultValues]);
 
   return (
     <Context.Provider value={contextValue}>

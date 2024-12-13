@@ -20,6 +20,11 @@ export function contextReducer(state: ContextState, action: DispatchAction): Con
           : currentCheckedValues.filter(v => v !== value);
       });
     }
+    case 'SET_CHECKED_VALUES': {
+      return produce(state, draft => {
+        draft.checkedValues = action.payload;
+      });
+    }
     default:
       return state;
   }

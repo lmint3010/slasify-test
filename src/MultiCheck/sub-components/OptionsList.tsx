@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 
 import { OptionCheckBox } from '@/MultiCheck/sub-components/OptionCheckBox';
-import { useMultiCheck } from '@/MultiCheck/sub-components/RootContext';
+import { useMultiCheck } from '@/MultiCheck/sub-components/RootContextProvider';
 
 import './OptionsList.css';
 

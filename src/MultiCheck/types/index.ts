@@ -14,4 +14,7 @@ export type DispatchAction = {
 } | {
   type: 'UPDATE_OPTION',
   payload: { value: string, checked: boolean },
+} | {
+  type: 'SET_CHECKED_VALUES',
+  payload: string[],
 };
