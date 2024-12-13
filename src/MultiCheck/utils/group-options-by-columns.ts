@@ -1,15 +1,18 @@
 import { Option } from '@/MultiCheck/types';
 
 export function groupOptionsByColumns(options: Option[], columns: number): Option[][] {
-  const idealOptionsPerColumn = Math.floor(options.length / columns);
+  // Apply constraints to keep the number of columns reasonable
+  const idealColumns = Math.ceil(options.length / 2);
+  const currentColumns = Math.min(idealColumns, columns);
 
-  const extraOptions = options.length % columns;
+  const idealOptionsPerColumn = Math.floor(options.length / currentColumns);
+  const extraOptions = options.length % currentColumns;
 
-  if (columns > options.length) {
+  if (currentColumns > options.length) {
     return options.map(option => [option]);
   }
 
-  const groupedResult = Array.from({ length: columns }) as Option[][];
+  const groupedResult = Array.from({ length: currentColumns }) as Option[][];
 
   groupedResult.forEach((_, index) => {
     const optionsToTake = idealOptionsPerColumn + (index < extraOptions ? 1 : 0);
