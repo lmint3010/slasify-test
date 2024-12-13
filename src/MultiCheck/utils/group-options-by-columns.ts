@@ -3,7 +3,8 @@ import { Option } from '@/MultiCheck/types';
 export function groupOptionsByColumns(options: Option[], columns: number): Option[][] {
   // Apply constraints to keep the number of columns reasonable
   const idealColumns = Math.ceil(options.length / 2);
-  const currentColumns = Math.min(idealColumns, columns);
+
+  const currentColumns = Math.min(idealColumns, Math.max(1, columns));
 
   const idealOptionsPerColumn = Math.floor(options.length / currentColumns);
   const extraOptions = options.length % currentColumns;
