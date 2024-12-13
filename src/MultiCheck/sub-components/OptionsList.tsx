@@ -43,7 +43,9 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
 
   useEffect(() => {
     if (hasInteracted && onChangeCallback) {
-      const checkedOptions = originalOptions.filter(
+      const optionsWithSelectAll = [SelectAllOption, ...originalOptions];
+
+      const checkedOptions = optionsWithSelectAll.filter(
         option => checkedValues.includes(option.value)
       );
 

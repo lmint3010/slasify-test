@@ -264,7 +264,7 @@ describe('MultiCheck', () => {
   });
 
   describe('Component Usability', () => {
-    test('should workable without values prop', () => {
+    test('should be functional without values prop being provided', () => {
       renderMultiCheck({ ...defaultProps });
 
       const targetOptions = TEST_OPTIONS.slice(0, 2);
@@ -278,7 +278,7 @@ describe('MultiCheck', () => {
       });
     });
 
-    test('should call onChange callback when options are changed', () => {
+    test('should trigger onChange callback with updated options when selections change', () => {
       const onChange = jest.fn();
 
       renderMultiCheck({ ...defaultProps, onChange });
@@ -296,6 +296,14 @@ describe('MultiCheck', () => {
 
       expect(onChange.mock.calls[0][0]).toEqual([targetOptions[0]]);
       expect(onChange.mock.calls[1][0]).toEqual(targetOptions);
+    });
+
+    test('should not trigger onChange callback without user interaction', () => {
+      const onChange = jest.fn();
+
+      renderMultiCheck({ ...defaultProps, onChange });
+
+      expect(onChange).not.toHaveBeenCalled();
     });
   });
 });
