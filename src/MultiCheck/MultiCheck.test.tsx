@@ -35,7 +35,7 @@ describe('MultiCheck', () => {
     test('should display label text when label prop is provided', () => {
       renderMultiCheck({ ...defaultProps, label: 'TestLabel' });
 
-    expect(screen.getByText('TestLabel')).toBeInTheDocument();
+      expect(screen.getByText('TestLabel')).toBeInTheDocument();
     });
 
     test('should not display any label when label prop is not provided', () => {
@@ -263,6 +263,36 @@ describe('MultiCheck', () => {
     });
   });
 
-  });
+  describe('Component Usability', () => {
+    test('should workable without values prop', () => {
+      renderMultiCheck({ ...defaultProps });
+
+      const targetOptions = TEST_OPTIONS.slice(0, 2);
+
+      targetOptions.forEach(option => {
+        const labelElement = screen.getByText(option.label);
+
+        fireEvent.click(labelElement);
+
+        expect(screen.getByDisplayValue(option.value)).toBeChecked();
+      });
+    });
+
+    test('should call onChange callback when options are changed', () => {
+      const onChange = jest.fn();
+
+      renderMultiCheck({ ...defaultProps, onChange });
+
+      const targetOptions = TEST_OPTIONS.slice(0, 2);
+
+      targetOptions.forEach(option => {
+        const labelElement = screen.getByText(option.label);
+
+        fireEvent.click(labelElement);
+      });
+
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledTimes(targetOptions.length);
+    });
   });
 });
