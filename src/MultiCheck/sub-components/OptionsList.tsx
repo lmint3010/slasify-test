@@ -3,6 +3,7 @@ import type { ChangeEvent, FC } from 'react';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
+import { SelectAllOption } from '@/MultiCheck/constants/initial';
 import { OptionCheckBox } from '@/MultiCheck/sub-components/OptionCheckBox';
 import { useMultiCheck } from '@/MultiCheck/sub-components/RootContextProvider';
 
@@ -16,12 +17,21 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
     dispatch,
   } = useMultiCheck();
 
-  const handleOptionChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleToggleOption = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = target;
-    
+
     dispatch({
       type: 'TOGGLE_OPTION',
       payload: { value, checked }
+    });
+  };
+
+  const handleToggleSelectAll = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = target;
+
+    dispatch({
+      type: 'TOGGLE_SELECT_ALL',
+      payload: { checked }
     });
   };
 
@@ -35,7 +45,10 @@ export const OptionsList: FC<MultiCheckOptionsListProps> = () => {
               label={label}
               value={value}
               checked={checkedValues.includes(value)}
-              onChange={handleOptionChange}
+              onChange={value === SelectAllOption.value
+                ? handleToggleSelectAll
+                : handleToggleOption
+              }
             />
           ))}
         </div>

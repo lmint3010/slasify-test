@@ -15,4 +15,7 @@ export type DispatchAction = {
 } | {
   type: 'TOGGLE_OPTION',
   payload: { value: string, checked: boolean },
+} | {
+  type: 'TOGGLE_SELECT_ALL',
+  payload: { checked: boolean },
 };

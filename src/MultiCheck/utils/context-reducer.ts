@@ -41,6 +41,18 @@ export function contextReducer(state: ContextState, action: DispatchAction): Con
       });
     }
 
+    case 'TOGGLE_SELECT_ALL': {
+      const { checked } = action.payload;
+
+      const originalOptionsValues = state.originalOptions.map(o => o.value);
+
+      return produce(state, draft => {
+        draft.checkedValues = checked
+          ? [...originalOptionsValues, SelectAllOption.value]
+          : [];
+      });
+    }
+
     default:
       return state;
   }
