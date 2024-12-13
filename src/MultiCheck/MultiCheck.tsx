@@ -53,7 +53,9 @@ export const MultiCheck: FC<Props> = ({
     >
       <div className='MultiCheck'>
         <h3 className='title'>{label}</h3>
-        <OptionsList />
+        <div className='content'>
+          <OptionsList />
+        </div>
       </div>
     </RootContextProvider>
   )
