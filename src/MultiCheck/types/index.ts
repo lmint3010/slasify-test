@@ -4,13 +4,14 @@ export type Option = {
 };
 
 export type ContextState = {
+  originalOptions: Option[],
   groupedOptions: Option[][],
   checkedValues: string[],
 };
 
 export type DispatchAction = {
-  type: 'SET_GROUPED_OPTIONS',
-  payload: Option[][],
+  type: 'INITIAL',
+  payload: ContextState,
 } | {
   type: 'TOGGLE_OPTION',
   payload: { value: string, checked: boolean },

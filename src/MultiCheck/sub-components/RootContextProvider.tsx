@@ -4,7 +4,7 @@ import type { ContextState, DispatchAction, Option } from "@/MultiCheck/types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 import { contextReducer } from "@/MultiCheck/utils/context-reducer";
-import { InitialContextState } from "@/MultiCheck/constants/initial";
+import { InitialContextState, SelectAllOption } from "@/MultiCheck/constants/initial";
 import { groupOptionsByColumns } from "@/MultiCheck/utils/group-options-by-columns";
 
 const Context = createContext<{
@@ -26,12 +26,14 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({
   defaultValues,
   onCheckedOptionsChange
 }) => {
+  const optionsWithSelectAll = [SelectAllOption, ...options];
+
   const [state, dispatch] = useReducer(contextReducer, InitialContextState);
 
   const { checkedValues } = state;
 
   const groupedOptions = useMemo(
-    () => groupOptionsByColumns([...options], columns),
+    () => groupOptionsByColumns(optionsWithSelectAll, columns),
     [options, columns]
   );
 
@@ -42,29 +44,24 @@ export const RootContextProvider: FC<RootContextProviderProps> = ({
 
   useEffect(() => {
     dispatch({
-      type: 'SET_GROUPED_OPTIONS',
-      payload: groupedOptions
+      type: 'INITIAL',
+      payload: {
+        groupedOptions,
+        originalOptions: options,
+        checkedValues: defaultValues || [],
+      }
     });
-  }, [groupedOptions]);
+  }, [groupedOptions, defaultValues]);
 
   useEffect(() => {
     if (!onCheckedOptionsChange) return;
 
-    const { checkedValues } = state;
-
-    const checkedOptions = options.filter(
+    const checkedOptions = optionsWithSelectAll.filter(
       ({ value }) => checkedValues.includes(value)
     );
 
     onCheckedOptionsChange(checkedOptions);
   }, [checkedValues]);
-
-  useEffect(() => {
-    dispatch({
-      type: 'SET_CHECKED_VALUES',
-      payload: defaultValues || []
-    });
-  }, [defaultValues]);
 
   return (
     <Context.Provider value={contextValue}>
